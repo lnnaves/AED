@@ -1,0 +1,209 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef struct nodo{
+    int valor;
+    struct nodo *esq;
+    struct nodo *dir;
+} Nodo;
+
+Nodo* criarNodo(int v){
+    Nodo *p = (Nodo*)malloc(sizeof(Nodo));
+    p->valor = v;
+    p->esq = NULL;
+    p->dir = NULL;
+    return p;
+}
+
+void mostraAtual(Nodo *atual){
+    if(atual == NULL)
+        printf("#\n");
+    else{
+        printf("%d\n",atual->valor);
+        if(atual->esq == NULL)
+            printf("   #\n");
+        else
+            printf("   %d\n",atual->esq->valor);
+        if(atual->dir == NULL)
+            printf("   #\n");
+        else
+            printf("   %d\n",atual->dir->valor);
+    }
+}
+
+void mostraArvore(Nodo *p, int nivel){
+    int i;
+    if(p == NULL){
+//        for(i=0;i<nivel;i++)
+//            printf("  ");
+//        printf("#\n");
+    }else{
+        for(i=0;i<nivel;i++)
+            printf("  ");
+        printf("%i\n",p->valor);
+        nivel++;
+        mostraArvore(p->esq,nivel);
+        mostraArvore(p->dir,nivel);
+    }
+}
+
+Nodo* excluirFilho(Nodo *p){
+    if(p==NULL)
+        printf("nodo nao existe\n");
+    else if(p->esq != NULL || p->dir != NULL){
+        printf("nodo nao eh folha\n");
+    }else{
+        free(p);
+        p=NULL;
+    }
+    return p;
+}
+
+Nodo* encontraPai(Nodo *raiz, Nodo *atual){
+    if(!raiz){
+        return NULL;
+    }else if(raiz->esq == atual || raiz->dir == atual){
+        return raiz;
+    }else{
+        Nodo *r = encontraPai(raiz->esq, atual);
+        if(r)
+            return r;
+        r = encontraPai(raiz->dir, atual);
+        if(r)
+            return r;
+    }
+}
+
+void excluirAtual(Nodo *p){
+    if(p!=NULL && (p->esq != NULL || p->dir != NULL)){
+        excluirAtual(p->esq);
+        excluirAtual(p->dir);
+        free(p);
+    }else{
+        free(p);
+    }
+}
+
+int main(){
+    Nodo *raiz = NULL, *atual = NULL, *pai;
+    int v;
+    char p;
+
+    do{
+        printf("L \n");
+        printf("M \n");
+        printf("P \n");
+        printf("C \n");
+        printf("R \n");
+        printf("X \n");
+        printf("Y \n");
+        printf("Z \n");
+
+        printf("E \n");
+        printf("opcao: ");
+        //printf("%i ", atual);
+        scanf("%c",&p);
+
+        switch(p){
+        case 'l':
+            printf("\nMostrando nodo atual\n");
+            mostraAtual(atual);
+            break;
+        case 'm':
+            //printf("navegando para a esquerda\n");
+            if(raiz == NULL || atual->esq == NULL)
+                printf("operacao invalida\n");
+            else
+                atual = atual->esq;
+
+            printf("atual:\n");
+            mostraAtual(atual);
+            break;
+        case 'p':
+           // printf("navegando para a direita\n");
+            if(raiz == NULL || atual->dir == NULL)
+                printf("operacao invalida\n");
+            else
+                atual = atual->dir;
+
+            printf("Pasta raiz:\n");
+            mostraAtual(atual);
+            break;
+        case 'c':
+            //printf("\nCriando novo nodo\n");
+            printf("valor: ");
+            scanf("%d",&v);
+            if(raiz == NULL){
+                raiz = criarNodo(v);
+                atual = raiz;
+            }else{
+                //printf("1 - para inserir a esq\n");
+                //printf("2 - para inserir a dir\n");
+                printf("opcao: ");
+                scanf("%c",&p);
+                if(p==NULL && atual->esq == NULL){
+                    atual->esq = criarNodo(v);
+                }
+                if(p==NULL && atual->dir == NULL){
+                    atual->dir = criarNodo(v);
+                }
+            }
+            printf("atual:\n");
+            mostraAtual(atual);
+            break;
+        case 'r':
+           // printf("\nNavegando para a raiz\n");
+            atual=raiz;
+            printf("atual:\n");
+            mostraAtual(atual);
+            break;
+        case 'x':
+            mostraArvore(raiz,0);
+            break;
+        case 'e':
+            printf("Sair\n");
+            break;
+        case 'y':
+            if(raiz == NULL){
+                printf("arvore vazia\n");
+                break;
+            }
+            printf("1 - para excluir filho esq\n");
+            printf("2 - para excluir filho dir\n");
+            printf("opcao: ");
+            scanf("%c",&p);
+            if(p == NULL){
+                atual->esq = excluirFilho(atual->esq);
+            }
+            if(p == NULL){
+                atual->dir = excluirFilho(atual->dir);
+            }
+            mostraAtual(atual);
+            break;
+        case 'z':
+            if(raiz == NULL)
+                printf("arvore vazia\n");
+            else{
+                if(atual == raiz){
+                    excluirAtual(raiz);
+                    raiz = NULL;
+                    atual = NULL;
+                }else{
+                    pai = encontraPai(raiz,atual);
+                    excluirAtual(atual);
+                    if(pai->esq == atual)
+                        pai->esq = NULL;
+                    else
+                        pai->dir = NULL;
+                    atual = pai;
+                }
+            }
+            break;
+        default:
+            printf("opcao invalida\n");
+        }
+        printf("\n\n\n");
+    }while(p!=0);
+
+    return 0;
+}
