@@ -71,7 +71,7 @@ void inserir_no_meio(Lista *lista, int num, int ant){
         printf("Error ao alocar a memoria\n");
 }
 
-//inserir ordenado
+/*inserir ordenado
 void inserir_ordenado(Lista *lista, int num){
     Nodo *aux, *novo = malloc(sizeof(Nodo));
 
@@ -96,7 +96,7 @@ void inserir_ordenado(Lista *lista, int num){
     }
     else
         printf("Error ao alocar a memoria\n");
-}
+}*/
 
 Nodo *remover(Lista *lista, int num){
     Nodo *aux, *remover = NULL;
