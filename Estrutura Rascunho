@@ -1,0 +1,5 @@
+- Checar se é raiz, se não tem que ter o ponteiro para o anterior;
+
+<--previous | name | type | contem | prox--> (|abc.exe | type | NULL | NULL |)
+                              ---> (<--previous | name | type | contem | prox-->)
+                                                    ---> (<--previous | name | type | contem | prox-->)
