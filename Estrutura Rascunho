@@ -6,7 +6,6 @@ Obs.:
 
 
 
-
               {Pasta}                                         {Arquivo}
 <--previous(pai) | name | type | contem | prox-->|) (| name | type | NULL | prox--> |)
                          ---> (<--previous(pai) | name | type | contem | prox-->|)
