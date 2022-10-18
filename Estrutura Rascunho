@@ -1,6 +1,12 @@
-- Checar se é raiz, se não tem que ter o ponteiro para o anterior, no caso de ser pasta;
+Obs.:
+- [Pasta] - Checar se é raiz, se não for tem que ter o ponteiro para o anterior;
+- [Arquivo] - Mesma struct da pasta, porém com o ponteiro (contém) sempre em NULL ou fazer sem ele;
+- Na hora de usar o "ls", considerar arquivo e pasta apenas pelo nome e não por tipo;
+- Ter um ponteiro auxiliar apontando para pasta atual;
 
-              {Pasta}                                 {Arquivo}
-<--previous(pai) | name | type | contem | prox--> (|abc.exe | type | NULL | NULL ou prox--> |)
-                              ---> (<--previous(pai) | name | type | contem | prox-->)
-                                                    ---> (<--previous | name | type | contem | prox-->)
+
+
+
+              {Pasta}                                         {Arquivo}
+<--previous(pai) | name | type | contem | prox-->|) (| name | type | NULL | prox--> |)
+                         ---> (<--previous(pai) | name | type | contem | prox-->|)
