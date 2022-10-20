@@ -1,0 +1,8 @@
+typedef struct nodo{
+    char[2] tipo;
+    string[] comando;
+    struct nodo *prox;
+    struct nodo *ant;
+    struct nodo *conteudo;
+    struct nodo *atual;
+}Nodo;
